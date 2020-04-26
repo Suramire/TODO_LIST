@@ -67,7 +67,7 @@
         [self showMessage:@"添加成功"];
         [[NotificationManager shardManager] sendNotificationWithTodoItem:self.todoItemNew];
         [self writeAll:self.data];
-        self.todoItem = nil;
+//        self.todoItem = nil;
     }else{
         if(self.todoItem != nil){
             for(int i=0;i<self.data.count;i++){
@@ -240,6 +240,7 @@
         AudioServicesPlaySystemSound(1004);
         [[NotificationManager shardManager ] removeNotificationById:item.id];
     }
+    [self writeAll:self.data];
     if(indexPath != nil){
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
