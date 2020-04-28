@@ -57,7 +57,6 @@
 - (void)viewDidAppear:(BOOL)animated{
 //    [self checkEmpty];
     if(self.isNewTodo){
-        //TODO 新的id生成规则
         self.todoItemNew.id = [NSString stringWithFormat:@"id_%@",self.todoItemNew.date];
         NSLog(@"id=%@",self.todoItemNew.id);
         [self.data addObject:self.todoItemNew];
@@ -78,12 +77,15 @@
                         [[NotificationManager shardManager] removeNotificationById:item.id];
                         //设置新的通知时间
                         [[NotificationManager shardManager] sendNotificationWithTodoItem:self.todoItem];
+                        //日期变化生成新id
+                        self.todoItem.id = [NSString stringWithFormat:@"id_%@",self.todoItemNew.date];
                     }
                            self.data[i] = self.todoItem;
                            [self.tableView reloadData];
                            break;
                        }
-                   }
+           }
+            [self writeAll:self.data];
         }
        
     }
