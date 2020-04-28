@@ -10,6 +10,8 @@
 		604DE4A5244D984100BECBCA /* TodoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 604DE4A4244D984100BECBCA /* TodoItem.m */; };
 		604DE4A8244D9FAE00BECBCA /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 604DE4A7244D9FAE00BECBCA /* TodoCell.m */; };
 		605A59F8244DD037008C106B /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 605A59F7244DD037008C106B /* MainTableViewController.m */; };
+		605B141D2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.m in Sources */ = {isa = PBXBuildFile; fileRef = 605B141C2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.m */; };
+		605B141F2457C67200809EB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 605B141E2457C67200809EB2 /* LaunchScreen.storyboard */; };
 		605D96C124503BF900EA407C /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 605D96C024503BF900EA407C /* NotificationManager.m */; };
 		60609B84244D7DC100EA113A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 60609B83244D7DC100EA113A /* AppDelegate.m */; };
 		60609B8D244D7DC100EA113A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60609B8B244D7DC100EA113A /* Main.storyboard */; };
@@ -28,6 +30,9 @@
 		604DE4A7244D9FAE00BECBCA /* TodoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoCell.m; sourceTree = "<group>"; };
 		605A59F6244DD037008C106B /* MainTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
 		605A59F7244DD037008C106B /* MainTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
+		605B141B2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+BSIBDesignable.h"; sourceTree = "<group>"; };
+		605B141C2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+BSIBDesignable.m"; sourceTree = "<group>"; };
+		605B141E2457C67200809EB2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		605D96BF24503BF900EA407C /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationManager.h; sourceTree = "<group>"; };
 		605D96C024503BF900EA407C /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationManager.m; sourceTree = "<group>"; };
 		60609B7F244D7DC100EA113A /* TODO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TODO.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +71,15 @@
 			path = model;
 			sourceTree = "<group>";
 		};
+		605B141A2457C5B100809EB2 /* category */ = {
+			isa = PBXGroup;
+			children = (
+				605B141B2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.h */,
+				605B141C2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.m */,
+			);
+			path = category;
+			sourceTree = "<group>";
+		};
 		605D96BE24503BD900EA407C /* uitl */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +108,7 @@
 		60609B81244D7DC100EA113A /* TODO_LIST */ = {
 			isa = PBXGroup;
 			children = (
+				605B141A2457C5B100809EB2 /* category */,
 				605D96BE24503BD900EA407C /* uitl */,
 				604DE4A1244D981900BECBCA /* model */,
 				60609B9F244D8F2D00EA113A /* view */,
@@ -104,6 +119,7 @@
 				60609B8E244D7DC300EA113A /* Assets.xcassets */,
 				60609B93244D7DC300EA113A /* Info.plist */,
 				60609B94244D7DC300EA113A /* main.m */,
+				605B141E2457C67200809EB2 /* LaunchScreen.storyboard */,
 			);
 			path = TODO_LIST;
 			sourceTree = "<group>";
@@ -191,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				608DD97C2451C77B00A70113 /* EmptyView.xib in Resources */,
+				605B141F2457C67200809EB2 /* LaunchScreen.storyboard in Resources */,
 				60609B8F244D7DC300EA113A /* Assets.xcassets in Resources */,
 				60609B8D244D7DC100EA113A /* Main.storyboard in Resources */,
 			);
@@ -210,6 +227,7 @@
 				60609B95244D7DC300EA113A /* main.m in Sources */,
 				60A451A42452AF4900BAEF86 /* SettingViewController.m in Sources */,
 				60609B9D244D8E4300EA113A /* MainViewController.m in Sources */,
+				605B141D2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.m in Sources */,
 				604DE4A5244D984100BECBCA /* TodoItem.m in Sources */,
 				604DE4A8244D9FAE00BECBCA /* TodoCell.m in Sources */,
 			);
