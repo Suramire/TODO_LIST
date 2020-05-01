@@ -43,7 +43,6 @@
 //日期选择变化
 - (void)valueChange:(UIDatePicker *)datePicker{
     NSLog(@"datePicker的时间 = %@" ,datePicker.date);
-    ///todo 日期变化后移除旧通知，同时修改id
     self.textFieldDate.text = [self fmDateString:datePicker.date];
     self.isDateModified = YES;
 }

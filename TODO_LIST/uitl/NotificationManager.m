@@ -26,7 +26,8 @@
 
 - (void) removeNotificationById:(NSString *)id{
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center removeDeliveredNotificationsWithIdentifiers:@[id]];
+    
+    [center removePendingNotificationRequestsWithIdentifiers:@[id]];
 }
 
 - (void) sendNotificationWithTodoItem:(TodoItem *)todoItem{

@@ -30,6 +30,8 @@
 
     [self.tableView reloadData];
     
+    [self checkEmpty];
+    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
 //    name:UIApplicationWillResignActiveNotification object:nil];
    
@@ -75,10 +77,14 @@
                     if(![item.date isEqualToString:self.todoItem.date]){
                         //如果是修改了待办的时间，则取消之前的通知
                         [[NotificationManager shardManager] removeNotificationById:item.id];
-                        //设置新的通知时间
-                        [[NotificationManager shardManager] sendNotificationWithTodoItem:self.todoItem];
+                        
                         //日期变化生成新id
                         self.todoItem.id = [NSString stringWithFormat:@"id_%@",self.todoItemNew.date];
+                        //设置新的通知时间
+                        if(!self.todoItem.isDone){
+                             [[NotificationManager shardManager] sendNotificationWithTodoItem:self.todoItem];
+                        }
+                       
                     }
                            self.data[i] = self.todoItem;
                            [self.tableView reloadData];
@@ -105,8 +111,8 @@
     }
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:items requiringSecureCoding:YES error:nil];
-    BOOL result =  [fm createFileAtPath:filePath contents:data attributes:nil];
-    NSLog(@"");
+    [fm createFileAtPath:filePath contents:data attributes:nil];
+    
 }
 
 
@@ -170,8 +176,9 @@
 - (void) checkEmpty{
     if(self.data.count == 0){
         //没有待办
-        UIView *emptyView = [[UIView alloc ]initWithFrame:self.tableView.frame];
-        
+        UIView *emptyView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyView" owner:nil options:nil] firstObject];
+        CGFloat navigationBarAndStatusBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
+        emptyView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - navigationBarAndStatusBarHeight);
         self.tableView.tableHeaderView = emptyView;
         self.tableView.userInteractionEnabled = NO;
     }else{
@@ -196,7 +203,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
     
     TodoItem *item = [self.data objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"goDetail" sender:item];
+    ///这里直接传item的话会导致从详情页回来后self.data对应元素改变
+    TodoItem *newItem = [TodoItem new];
+    newItem.content = item.content;
+    newItem.id = item.id;
+    newItem.date = item.date;
+    newItem.isDone = item.isDone;
+    [self performSegueWithIdentifier:@"goDetail" sender:newItem];
     
 //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -226,6 +239,7 @@
     //TODO 编写只删除一条数据的方法
 //    [self checkEmpty];
     //TODO 删除对应的通知 只刷新一行 确认删除
+    //TODO 修改日期的待办 判断是否标记已完成
     
 }
 
@@ -237,6 +251,7 @@
     TodoItem *item = [self.data objectAtIndex:indexPath.row];
     if(item.isDone){
         item.isDone = NO;
+        [[NotificationManager shardManager]sendNotificationWithTodoItem:item];
     }else{
         item.isDone = YES;
         AudioServicesPlaySystemSound(1004);
