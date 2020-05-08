@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6029CFBB24653A0F0010E168 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6029CFBA24653A0F0010E168 /* TestViewController.m */; };
 		604DE4A5244D984100BECBCA /* TodoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 604DE4A4244D984100BECBCA /* TodoItem.m */; };
 		604DE4A8244D9FAE00BECBCA /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 604DE4A7244D9FAE00BECBCA /* TodoCell.m */; };
 		605A59F8244DD037008C106B /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 605A59F7244DD037008C106B /* MainTableViewController.m */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6029CFB924653A0F0010E168 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		6029CFBA24653A0F0010E168 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		604DE4A3244D984100BECBCA /* TodoItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoItem.h; sourceTree = "<group>"; };
 		604DE4A4244D984100BECBCA /* TodoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoItem.m; sourceTree = "<group>"; };
 		604DE4A6244D9FAE00BECBCA /* TodoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoCell.h; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 				605A59F7244DD037008C106B /* MainTableViewController.m */,
 				60A451A22452AF4900BAEF86 /* SettingViewController.h */,
 				60A451A32452AF4900BAEF86 /* SettingViewController.m */,
+				6029CFB924653A0F0010E168 /* TestViewController.h */,
+				6029CFBA24653A0F0010E168 /* TestViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 				60609B84244D7DC100EA113A /* AppDelegate.m in Sources */,
 				605D96C124503BF900EA407C /* NotificationManager.m in Sources */,
 				60609B95244D7DC300EA113A /* main.m in Sources */,
+				6029CFBB24653A0F0010E168 /* TestViewController.m in Sources */,
 				60A451A42452AF4900BAEF86 /* SettingViewController.m in Sources */,
 				60609B9D244D8E4300EA113A /* MainViewController.m in Sources */,
 				605B141D2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.m in Sources */,

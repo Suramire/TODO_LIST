@@ -23,6 +23,8 @@
 
 @property (atomic,assign) BOOL isLoadingMore;
 
+@property (atomic,assign) BOOL scrollManually;//手动滑动
+
 @end
 
 @implementation MainTableViewController
@@ -53,11 +55,12 @@
 }
 
 - (void) refreshData{
-    _isLoadingMore = true;
-    self.data = [self readItem].mutableCopy;
-    
-    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5f];
-    
+    if(_loadMoreView && _myrefreshControl.isRefreshing){
+         [_myrefreshControl endRefreshing];
+    }else{
+        self.data = [self readItem].mutableCopy;
+        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5f];
+    }
 }
 
 - (void) stopRefresh{
@@ -67,7 +70,6 @@
 //    [self.tableView reloadData];
     [self showMessage:@"刷新成功"];
     [self checkEmpty];
-    _isLoadingMore = false;
 }
 
 - (void) showMessage:(NSString *)message{
@@ -85,21 +87,24 @@
 //}
 
 #pragma mark 列表滑动时触发
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    _scrollManually = YES;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    _scrollManually = NO;
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+    [self.navigationController setNavigationBarHidden:velocity.y >0 animated:YES];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//    if(scrollView.contentOffset.y+scrollView.frame.size.height > scrollView.contentSize.height){
-//        NSLog(@"YES1");
-//    }
-//
-//    if(!_myrefreshControl.isRefreshing){
-//        NSLog(@"YES2");
-//    }
-//
-//    if(!_isLoadingMore){
-//        NSLog(@"YES3");
-//    }
+
     
     ///滑到底部并且没有在下拉刷新
-    if(scrollView.contentOffset.y+scrollView.frame.size.height > scrollView.contentSize.height && !_myrefreshControl.isRefreshing && !_isLoadingMore){
+    if(scrollView.contentOffset.y+scrollView.frame.size.height > scrollView.contentSize.height && _scrollManually && !_isLoadingMore){
         NSLog(@"上拉加载更多");
         self.tableView.tableFooterView = _loadMoreView;
         _isLoadingMore = true;
