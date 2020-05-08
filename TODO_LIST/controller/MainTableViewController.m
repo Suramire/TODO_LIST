@@ -17,6 +17,12 @@
 //待办列表
 @property (strong, nonatomic,readwrite) NSMutableArray *data;
 
+@property (strong, nonatomic,readwrite) UIRefreshControl *myrefreshControl;
+
+@property (strong, nonatomic,readwrite) UILabel *loadMoreView;
+
+@property (atomic,assign) BOOL isLoadingMore;
+
 @end
 
 @implementation MainTableViewController
@@ -24,20 +30,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.data = [self readItem].mutableCopy;
+//    self.data = [self readItem].mutableCopy;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
-    [self.tableView reloadData];
     
-    [self checkEmpty];
+    _myrefreshControl = [[UIRefreshControl alloc]init];
+    _myrefreshControl.tintColor = [UIColor orangeColor];
+    _myrefreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
+    [_myrefreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView setRefreshControl:_myrefreshControl];
+    _loadMoreView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    _loadMoreView.textAlignment = NSTextAlignmentCenter;
+    _loadMoreView.text = @"正在加载更多";
+    [self refreshData];
+
+    
+    
+    
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
 //    name:UIApplicationWillResignActiveNotification object:nil];
-   
-    
+}
 
+- (void) refreshData{
+    _isLoadingMore = true;
+    self.data = [self readItem].mutableCopy;
     
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5f];
+    
+}
+
+- (void) stopRefresh{
+    if(_myrefreshControl.isRefreshing){
+        [_myrefreshControl endRefreshing];
+    }
+//    [self.tableView reloadData];
+    [self showMessage:@"刷新成功"];
+    [self checkEmpty];
+    _isLoadingMore = false;
 }
 
 - (void) showMessage:(NSString *)message{
@@ -54,10 +84,58 @@
 //
 //}
 
+#pragma mark 列表滑动时触发
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+//    if(scrollView.contentOffset.y+scrollView.frame.size.height > scrollView.contentSize.height){
+//        NSLog(@"YES1");
+//    }
+//
+//    if(!_myrefreshControl.isRefreshing){
+//        NSLog(@"YES2");
+//    }
+//
+//    if(!_isLoadingMore){
+//        NSLog(@"YES3");
+//    }
+    
+    ///滑到底部并且没有在下拉刷新
+    if(scrollView.contentOffset.y+scrollView.frame.size.height > scrollView.contentSize.height && !_myrefreshControl.isRefreshing && !_isLoadingMore){
+        NSLog(@"上拉加载更多");
+        self.tableView.tableFooterView = _loadMoreView;
+        _isLoadingMore = true;
+        [self performSelector:@selector(loadMoreData) withObject:nil afterDelay:3];
+        
+    }
+    
+}
+
+#pragma mark 加载更多
+-(void) loadMoreData{
+    if(self.data.count<=17){
+        //新建待办
+           TodoItem *newItem = [TodoItem new];
+           newItem.content = @"新项目";
+           newItem.date = @"xxxx";
+           [self.data addObject:newItem];
+           [self.data addObject:newItem];
+           [self.data addObject:newItem];
+           [self.data addObject:newItem];
+           [self.data addObject:newItem];
+           [self.tableView reloadData];
+           self.tableView.tableFooterView = nil;
+           _isLoadingMore = false;
+    }else{
+        _loadMoreView.text = @"没有更多数据";
+        self.tableView.tableFooterView = _loadMoreView;
+    }
+    
+   
+}
+
 
 
 - (void)viewDidAppear:(BOOL)animated{
-//    [self checkEmpty];
+   
     if(self.isNewTodo){
         self.todoItemNew.id = [NSString stringWithFormat:@"id_%@",self.todoItemNew.date];
         NSLog(@"id=%@",self.todoItemNew.id);
@@ -93,8 +171,8 @@
            }
             [self writeAll:self.data];
         }
-       
     }
+     [self checkEmpty];
     
 }
 //写入所有数据
