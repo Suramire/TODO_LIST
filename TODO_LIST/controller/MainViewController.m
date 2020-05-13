@@ -9,19 +9,51 @@
 #import "MainViewController.h"
 #import "MainTableViewController.h"
 #import "TodoItem.h"
-@interface MainViewController ()
+#import <CoreLocation/CoreLocation.h>
+@interface MainViewController () <CLLocationManagerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textViewContent;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldDate;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnDelete;
 @property(nonatomic,strong) UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIImageView *imagePick;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
+
+@property CLLocationManager *locationManager;
 
 @property BOOL isDateModified;
 @end
 
 @implementation MainViewController
 
+//- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+//
+//
+//    NSLog(@"%@",[NSString stringWithFormat:@"%lf", newLocation.coordinate.latitude]);
+//
+//    self.title = [NSString stringWithFormat:@"%lf", newLocation.coordinate.latitude];
+//
+//}
+
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    NSLog(@"%@",[locations lastObject]);
+    CLLocation *lastLocation =[locations lastObject];
+    [_locationManager stopUpdatingLocation];
+    CLGeocoder *geocoder = [CLGeocoder new];
+    [geocoder reverseGeocodeLocation:lastLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark *mark = [placemarks firstObject];
+        NSLog(@"%@",mark);
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    _locationManager = [[CLLocationManager alloc] init];
+//    _locationManager.delegate = self;
+//    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//    _locationManager.distanceFilter = kCLDistanceFilterNone;
+//    [_locationManager requestAlwaysAuthorization];
+//     [_locationManager startUpdatingLocation];
     self.btnDelete.enabled = self.todoItem ==nil;
     //初始化datePicker
     self.datePicker = [[UIDatePicker alloc] init];
@@ -37,8 +69,32 @@
         //默认给一个时间
         self.textFieldDate.text = [self fmDateString:self.datePicker.date];
     }
+    
+    [_imagePick addGestureRecognizer: _tapGestureRecognizer];
 
 }
+
+- (IBAction)pickImage:(id)sender {
+    NSLog(@"pick");
+    //调用系统相册的类
+      UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
+      //设置选取的照片是否可编辑
+      pickerController.allowsEditing = NO;
+      //设置相册呈现的样式
+      pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
+      //照片的选取样式还有以下两种
+      //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册
+      //UIImagePickerControllerSourceTypeCamera//调取摄像头
+      
+      //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+      pickerController.delegate = self;
+      //使用模态呈现相册
+      [self.navigationController presentViewController:pickerController animated:YES completion:^{
+    
+      }];
+    
+}
+
 
 //日期选择变化
 - (void)valueChange:(UIDatePicker *)datePicker{
@@ -94,6 +150,18 @@
     NSTimeInterval interval = [zone secondsFromGMTForDate:inDate];
     NSDate *current = [inDate dateByAddingTimeInterval:interval];
     return current;
+}
+
+#pragma mark 选择图片delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> *)info{
+//    NSLog(@"%@",info);
+    _imagePick.image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+/// 取消选择
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 

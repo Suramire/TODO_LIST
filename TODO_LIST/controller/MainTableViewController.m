@@ -260,8 +260,8 @@
     if(self.data.count == 0){
         //没有待办
         UIView *emptyView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyView" owner:nil options:nil] firstObject];
-        CGFloat navigationBarAndStatusBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
-        emptyView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - navigationBarAndStatusBarHeight);
+//        CGFloat navigationBarAndStatusBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
+//        emptyView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - navigationBarAndStatusBarHeight);
         self.tableView.tableHeaderView = emptyView;
         self.tableView.userInteractionEnabled = NO;
     }else{
@@ -269,6 +269,7 @@
         self.tableView.userInteractionEnabled = YES;
     }
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -20,7 +20,6 @@
 		60609B95244D7DC300EA113A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 60609B94244D7DC300EA113A /* main.m */; };
 		60609B9D244D8E4300EA113A /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60609B9C244D8E4300EA113A /* MainViewController.m */; };
 		608DD97C2451C77B00A70113 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 608DD97B2451C77B00A70113 /* EmptyView.xib */; };
-		60A451A42452AF4900BAEF86 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A451A32452AF4900BAEF86 /* SettingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +46,6 @@
 		60609B9B244D8E4300EA113A /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		60609B9C244D8E4300EA113A /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		608DD97B2451C77B00A70113 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
-		60A451A22452AF4900BAEF86 /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
-		60A451A32452AF4900BAEF86 /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,8 +128,6 @@
 				60609B9C244D8E4300EA113A /* MainViewController.m */,
 				605A59F6244DD037008C106B /* MainTableViewController.h */,
 				605A59F7244DD037008C106B /* MainTableViewController.m */,
-				60A451A22452AF4900BAEF86 /* SettingViewController.h */,
-				60A451A32452AF4900BAEF86 /* SettingViewController.m */,
 				6029CFB924653A0F0010E168 /* TestViewController.h */,
 				6029CFBA24653A0F0010E168 /* TestViewController.m */,
 			);
@@ -225,7 +220,6 @@
 				605D96C124503BF900EA407C /* NotificationManager.m in Sources */,
 				60609B95244D7DC300EA113A /* main.m in Sources */,
 				6029CFBB24653A0F0010E168 /* TestViewController.m in Sources */,
-				60A451A42452AF4900BAEF86 /* SettingViewController.m in Sources */,
 				60609B9D244D8E4300EA113A /* MainViewController.m in Sources */,
 				605B141D2457C5CB00809EB2 /* NSLayoutConstraint+BSIBDesignable.m in Sources */,
 				604DE4A5244D984100BECBCA /* TodoItem.m in Sources */,
