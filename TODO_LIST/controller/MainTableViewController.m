@@ -33,9 +33,15 @@
     [super viewDidLoad];
     
 //    self.data = [self readItem].mutableCopy;
+    ///修改默认返回按钮
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"fanhui"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:nil action:nil];
+    //返回按钮颜色
+    self.navigationController.navigationBar.tintColor = [UIColor systemOrangeColor];
+    //隐藏原来的返回按钮
+    self.navigationController.navigationBar.backIndicatorImage = [UIImage new];
+    self.navigationController.navigationBar.backIndicatorTransitionMaskImage = [UIImage new];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
     _myrefreshControl = [[UIRefreshControl alloc]init];
     _myrefreshControl.tintColor = [UIColor orangeColor];
     _myrefreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
