@@ -12,7 +12,6 @@
 #import "TodoItem.h"
 #import "NotificationManager.h"
 #import <AudioToolbox/AudioToolbox.h>
-
 @interface MainTableViewController ()
 //待办列表
 @property (strong, nonatomic,readwrite) NSMutableArray *data;
@@ -31,7 +30,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if(![ud boolForKey:@"mynotificationEnable"]){
+        [[NotificationManager shardManager] requestAtBoot];
+    }
 //    self.data = [self readItem].mutableCopy;
     ///修改默认返回按钮
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"fanhui"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -51,7 +53,7 @@
     _loadMoreView.textAlignment = NSTextAlignmentCenter;
     _loadMoreView.text = @"正在加载更多";
     [self refreshData];
-
+    
     
     
     
@@ -65,7 +67,9 @@
          [_myrefreshControl endRefreshing];
     }else{
         self.data = [self readItem].mutableCopy;
-        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5f];
+        if(self.data.count != 0){
+            [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5f];
+        }
     }
 }
 
@@ -243,13 +247,21 @@
     return array;
 }
 
+#pragma mark 点击事件
+
 - (IBAction)newClicked:(id)sender {
     
     [self performSegueWithIdentifier:@"goDetail" sender:nil];
     
 }
 
-#pragma mark - Table view data source
+- (IBAction)settingClicked:(id)sender {
+    NSLog(@"点击设置");
+
+}
+
+
+#pragma mark Table view data source
 
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 //

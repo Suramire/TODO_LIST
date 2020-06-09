@@ -20,6 +20,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MOBAppKey</key>
+	<string>m2ef45eeee3d62</string>
+	<key>MOBAppSecret</key>
+	<string>5b17b11b0b6a793efbee4624508c2051</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>需要记录地点，是否同意？</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

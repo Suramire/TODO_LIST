@@ -17,7 +17,8 @@
 @property(nonatomic,strong) UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIImageView *imagePick;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
-
+@property (strong,nonatomic) UIView *flowView;
+@property (strong,nonatomic) UILabel *locationLabel;
 @property CLLocationManager *locationManager;
 
 @property BOOL isDateModified;
@@ -37,6 +38,7 @@
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray<CLLocation *> *)locations{
     NSLog(@"%@",[locations lastObject]);
+    _locationLabel.text = [NSString stringWithFormat:@"%@",[locations lastObject]];
     CLLocation *lastLocation =[locations lastObject];
     [_locationManager stopUpdatingLocation];
     CLGeocoder *geocoder = [CLGeocoder new];
@@ -53,7 +55,7 @@
 //    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
 //    _locationManager.distanceFilter = kCLDistanceFilterNone;
 //    [_locationManager requestAlwaysAuthorization];
-//     [_locationManager startUpdatingLocation];
+//    [_locationManager startUpdatingLocation];
     self.btnDelete.enabled = self.todoItem ==nil;
     //初始化datePicker
     self.datePicker = [[UIDatePicker alloc] init];
@@ -62,16 +64,38 @@
     self.textFieldDate.inputView = self.datePicker;
     [self.datePicker addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
     //初始化文本
-    if(self.todoItem != nil){
+    if(self.todoItem){
         self.textViewContent.text = self.todoItem.content;
         self.textFieldDate.text = self.todoItem.date;
+//        if(self.todoItem.picture){
+//            self.imagePick.image = self.todoItem.picture;
+//        }
     }else{
         //默认给一个时间
         self.textFieldDate.text = [self fmDateString:self.datePicker.date];
     }
     
-    [_imagePick addGestureRecognizer: _tapGestureRecognizer];
+    
+//    _flowView = [UIView new];
+//    _flowView.frame = CGRectMake(100, 100, 100, 100);
+//    _flowView.backgroundColor = [UIColor lightGrayColor];
+////    _flowView.window.windowLevel = UIWindowLevelAlert + 1;
+//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(locationViewMove:)];
+//    [_flowView addGestureRecognizer:pan];
+//    _locationLabel = [UILabel new];
+//    _locationLabel.frame = CGRectMake(10, 10, 40, 90);
+//    _locationLabel.numberOfLines = 0;
+//    [_flowView addSubview:_locationLabel];
+//    [self.view addSubview:_flowView];
+    
+    
+//    [_imagePick addGestureRecognizer: _tapGestureRecognizer];
 
+}
+
+-(void) locationViewMove:(UIPanGestureRecognizer*)p{
+    CGPoint panPoint = [p locationInView:[[UIApplication sharedApplication] keyWindow]];
+    self.flowView.center = CGPointMake(panPoint.x, panPoint.y);
 }
 
 - (IBAction)pickImage:(id)sender {
@@ -85,7 +109,6 @@
       //照片的选取样式还有以下两种
       //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册
       //UIImagePickerControllerSourceTypeCamera//调取摄像头
-      
       //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
       pickerController.delegate = self;
       //使用模态呈现相册
@@ -138,6 +161,7 @@
         TodoItem *newItem = [TodoItem new];
         newItem.content = self.textViewContent.text;
         newItem.date = [self fmDateString:self.datePicker.date];
+//        newItem.picture = self.imagePick.image;
         controller.todoItemNew = newItem;
         controller.isNewTodo = YES;
     }
@@ -155,7 +179,6 @@
 #pragma mark 选择图片delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> *)info{
-//    NSLog(@"%@",info);
     _imagePick.image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

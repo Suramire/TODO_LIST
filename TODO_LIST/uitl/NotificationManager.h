@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) sendNotificationWithTodoItem:(TodoItem *)todoItem;
 
+- (void) requestAtBoot;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -24,6 +24,17 @@
     return manager;
 }
 
+- (void) requestAtBoot{
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge |
+                                             UNAuthorizationOptionSound |UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        [[NSUserDefaults standardUserDefaults] setBool:granted forKey:@"mynotificationEnable"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }];
+ 
+}
+
 - (void) removeNotificationById:(NSString *)id{
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     
